@@ -12,9 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
-    private val loginUseCase : LoginUseCase
-) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginUseCase: LoginUseCase) : ViewModel() {
 
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> = _email
@@ -34,14 +32,13 @@ class LoginViewModel @Inject constructor(
         _isLoginEnabled.value = enableLogin(email, password)
     }
 
-    fun isLoginSelected(){
+    fun isLoginSelected() {
         viewModelScope.launch {
             _isLoading.value = true
             val result = loginUseCase(email.value!!, password.value!!)
-            if(result){
+            if (result) {
                 Log.i("brian", "Brian OK")
-            }
-            else{
+            } else {
                 Log.i("brian", "Brian ERROR")
             }
             _isLoading.value = false
