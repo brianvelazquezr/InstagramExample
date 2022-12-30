@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
 
+    //Just a comment to understand rebase
+
     val loginUseCase = LoginUseCase()
 
     private val _email = MutableLiveData<String>()
