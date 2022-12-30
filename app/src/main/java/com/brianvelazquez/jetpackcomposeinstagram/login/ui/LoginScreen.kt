@@ -34,21 +34,27 @@ import com.brianvelazquez.jetpackcomposeinstagram.R
 fun LoginScreen(loginViewModel: LoginViewModel) {
     Box(
         Modifier
-            //.padding(16.dp)
             .fillMaxSize()
     ) {
-        Header(
-            Modifier
-                .align(Alignment.TopEnd)
-                .padding(16.dp)
-        )
-        Body(
-            loginViewModel,
-            Modifier
-                .align(Alignment.Center)
-                .padding(16.dp)
-        )
-        Footer(Modifier.align(Alignment.BottomCenter))
+
+        val isLoading : Boolean by loginViewModel.isLoading.observeAsState(initial = false)
+        
+        if(isLoading){
+            Box(modifier = Modifier.fillMaxSize()){
+                CircularProgressIndicator(Modifier.align(Alignment.Center))
+            }
+        }
+        else {
+            Header(
+                Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(16.dp))
+            Body(loginViewModel,
+                Modifier
+                    .align(Alignment.Center)
+                    .padding(16.dp))
+            Footer(Modifier.align(Alignment.BottomCenter))
+        }
     }
 }
 
@@ -101,7 +107,7 @@ fun Body(loginViewModel: LoginViewModel, modifier: Modifier) {
         Spacer(modifier = Modifier.height(8.dp))
         ForgotPasswordButton(Modifier.align(Alignment.End))
         Spacer(modifier = Modifier.height(16.dp))
-        LogInButton(isLoginEnabled)
+        LogInButton(isLoginEnabled, loginViewModel)
         Spacer(modifier = Modifier.height(16.dp))
         LogInDivider()
         Spacer(modifier = Modifier.height(32.dp))
@@ -157,9 +163,9 @@ fun LogInDivider() {
 }
 
 @Composable
-fun LogInButton(loginEnable: Boolean) {
+fun LogInButton(loginEnable: Boolean, loginViewModel: LoginViewModel) {
     Button(
-        onClick = {},
+        onClick = {loginViewModel.isLoginSelected()},
         enabled = loginEnable,
         modifier = Modifier.fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
