@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetpackComposeinstagramTheme {
                 // A surface container using the 'background' color from the theme
+                // Just a comment
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
